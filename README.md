@@ -1,4 +1,0 @@
-qmssviz
-=======
-
-QMSS data visualization
