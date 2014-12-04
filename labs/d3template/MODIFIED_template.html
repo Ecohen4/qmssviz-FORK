@@ -9,11 +9,19 @@
     <body>
         <script type="text/javascript">
 		d3.select("body").append("p").text("New paragraph!");
-var dataset
-		d3.csv("NYC_US_Hourly_Demand.csv", function(data){
-		nyc=data;
-     		console.log(nyc);
-		});
+		d3.select("body").append("svg");
+		d3.select("svg").attr("width", 500).attr("height", 50);
 	    </script>
+	    <script>
+	    var dataset; // declare global var
+	    d3.csv("NYC_US_Hourly_Demand.csv", function(data){
+     		dataset=data; //hand csv data off to global var
+		});
+		d3.select("body").selectAll("p")
+		.data(dataset)
+		.enter()
+		.append("p")
+		.text("New Paragraph!");
+		</script>
     </body>
 </html>

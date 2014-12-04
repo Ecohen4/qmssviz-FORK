@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>D3: Loading data from a CSV file</title>
+  <!-- load stylesheet -->
+  <link rel="stylesheet" href="style.css">
+  <!-- load JavaScript-->
+  <script src="script.js"></script>
+  <!-- load d3 -->
+  <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+</head>
+
+<body>
+  <script type="text/javascript">
+    var dataset;
+    var foods;
+    
+     // Two approaches:
+     // 1. declare var in global envt and push to that var from inside the function. 
+     // then call function in the d3.csv() callback.
+     // var foods = [] // declare foods array in global envt
+     // var getFood = function(data) {
+     // 	for (var i = data.length - 1; i >= 0; i--) {
+     // 	foods.push(  // push to global var from inside function
+     // 		data[i].Food
+     // 		)
+     // 	}	
+     // };
+     
+     // 2. declare var inside the funciton, push to var inside fucntion.
+     // then assign returned object to var in global envt
+		var getFood = function(data) {
+			var foods = []
+			for (var i = data.length - 1; i >= 0; i--) {
+			foods.push(
+				data[i].Food
+				)
+			}	
+			return foods
+		};
+
+    d3.csv("food.csv", function(data) {
+      dataset = data
+      // getFood(data)      // approach 1.
+      foods = getFood(data) // approach 2.
+      console.log(foods);   // optional
+
+      // call visualization functions and any routines that use data from inside d3.csv() 
+      // because JavaScript is asynchronous
+      d3.select("body").selectAll("p")
+        .data(foods)
+        .enter()
+        .append("p")
+        .text(function(d) {
+          return "I like to eat " + d;
+        });
+    });
+
+     // identical to below
+     // d3.csv("food.csv", csvCallback)
+     // var csvCallback = function(data) {
+     // 			dataset = data
+     //			var foods = getFood(data)
+     // 			console.log(data);
+     // 		}
+
+  </script>
+</body>
+
+</html>

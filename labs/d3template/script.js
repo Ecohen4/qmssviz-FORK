@@ -1,3 +1,11 @@
+var dataset
+		d3.csv("NYC_US_Hourly_Demand.csv", function(data){
+		nyc=data;
+     		console.log(nyc);
+		});
+
+		
+
 var numbers = [5, 10, 15, 20, 25]
 
 var fruits = [
